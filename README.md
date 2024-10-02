@@ -23,7 +23,8 @@ Running the demo:
 
 The following is a federated query that should work.
 
-1) All Data for Policy 1
+1) All Data for Policy 1 :
+   
 query  {
   retrievePolicy(policyId: "1") {
     lineOfBusiness,
@@ -69,7 +70,8 @@ query  {
   }
 }
 
-2) Data for Policy 1 and Participant Id 1
+2) Data for Policy 1 and Participant Id 1:
+   
   query($participantIdentifier: ID!)  {
   retrievePolicy(policyId: "1") {
     lineOfBusiness,
