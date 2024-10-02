@@ -1,0 +1,12 @@
+type Policy @key(fields: "policyId") @extends {
+    policyId: ID @external
+    retrieveClaims(claimNumber: String): Claim
+    retrieveClaim(claimId: ID!): Claim
+}
+
+type Claim @key(fields: "claimId") {
+     claimId: ID
+     claimNumber: String!
+     lineOfBusiness: String
+     state: String
+ }

@@ -1,0 +1,24 @@
+type Claim @key(fields: "claimId") @extends {
+    claimId: ID @external
+    vehicles: [Vehicle]
+    retrieveVehicle(id: ID!): [Vehicle]
+}
+
+type Participant @key(fields: "claimId participantIdentifier") @extends {
+    claimId: ID @external
+    participantIdentifier: String @external
+    vehicles: [Vehicle]
+}
+
+type Vehicle{
+    vehicleIdentifier: String!
+    claimId: ID
+    participantIdentifier: String
+    vehicleMake: String!
+    vehicleModel: String!
+    vehicleYear: String!
+}
+
+
+
+

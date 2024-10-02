@@ -1,0 +1,9 @@
+type Query {
+   retrievePolicy(policyId: ID!): [Policy]
+}
+
+type Policy @key(fields: "policyId") {
+    policyId: ID
+    policyNumber: String!
+    lineOfBusiness: String
+ }

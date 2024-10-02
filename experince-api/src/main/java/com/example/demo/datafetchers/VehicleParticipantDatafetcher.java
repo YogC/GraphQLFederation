@@ -1,0 +1,52 @@
+package com.example.demo.datafetchers;
+
+import com.example.demo.generated.types.Claim;
+import com.example.demo.generated.types.Participant;
+import com.example.demo.generated.types.Vehicle;
+import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsData;
+import com.netflix.graphql.dgs.DgsDataFetchingEnvironment;
+import com.netflix.graphql.dgs.DgsEntityFetcher;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+
+@DgsComponent
+public class VehicleParticipantDatafetcher {
+
+    // Map<String, Vehicle> vehicles = new HashMap<>();
+    List<Vehicle> vehicles = new ArrayList<>();
+
+
+    public VehicleParticipantDatafetcher() {
+
+        //List<Vehicle> vehicleOne = new ArrayList<>();
+        vehicles.add(new Vehicle("1","1","1","Toyota","Camry","2020"));
+        vehicles.add(new Vehicle("2","1","2","Honda","CIVIC","2021"));
+        //vehicles.put("1", vehicleOne);
+
+        //List<Vehicle> vehicleTwo = new ArrayList<>();
+        vehicles.add(new Vehicle("3","2","3","Honda","CRV","2020"));
+        vehicles.add(new Vehicle("4","2","4","Toyota","RAV4","2021"));
+        //vehicles.put("2", vehicleTwo);
+    }
+
+    @DgsEntityFetcher(name = "Participant")
+    public Participant movie(Map<String, Object> values) {
+        return new Participant((String) values.get("claimId"), (String) values.get("participantIdentifier"),null);
+    }
+
+    @DgsData(parentType = "Participant", field = "vehicles")
+    public List<Vehicle> vehiclesFetcher(DgsDataFetchingEnvironment dataFetchingEnvironment)  {
+        Participant participant = dataFetchingEnvironment.getSource();
+        System.out.println("Claim Vehicle getClaimId ==================>"+participant.getClaimId());
+        System.out.println("Claim Vehicle getParticipantIdentifier ==================>"+participant.getParticipantIdentifier());
+        List<Vehicle> claimVehicles = vehicles.stream().filter(vehicle -> vehicle.getClaimId().equals(participant.getClaimId() )).collect(Collectors.toList());
+        return claimVehicles.stream().filter(vehicle -> vehicle.getParticipantIdentifier().equals(participant.getParticipantIdentifier() )).collect(Collectors.toList());
+    }
+
+}

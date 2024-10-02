@@ -1,0 +1,23 @@
+type Claim @key(fields: "claimId") @extends {
+    claimId: ID @external
+    participants: [Participant]
+    retrieveParticipant(participantIdentifier: ID!): [Participant]
+}
+
+type Participant @key(fields: "claimId participantIdentifier") {
+    claimId: ID!
+    participantIdentifier: String!
+    participantType: String!
+    participantRole: String!
+    participantName : ParticipantName!
+}
+
+type ParticipantName{
+    firstName: String!
+    LastName: String!
+    MiddleName: String!
+}
+
+
+
+

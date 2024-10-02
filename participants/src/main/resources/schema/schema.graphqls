@@ -1,0 +1,30 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key","@extends","@external","@shareable"])
+
+type Claim @key(fields: "claimId") @extends {
+    claimId: ID @external
+    participants: [Participant]
+    retrieveParticipant(participantIdentifier: ID!): [Participant]
+}
+
+type Participant @key(fields: "claimId participantIdentifier customerId") {
+    claimId: ID!
+    participantIdentifier: String!
+    customerId: ID!
+    participantType: String!
+    participantRole: String!
+    participantName : ParticipantName!
+}
+
+type ParticipantName{
+    participantNameIdentifier: ID! @shareable
+    firstName: String! @shareable
+    LastName: String! @shareable
+    MiddleName: String! @shareable
+    fullName: String! @shareable
+}
+
+
+
+

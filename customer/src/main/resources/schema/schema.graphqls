@@ -1,0 +1,51 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key","@extends","@external","@shareable"])
+
+type Participant @key(fields: "customerId") @extends {
+    customerId: ID @external
+    readCustomer : Customer
+}
+
+type Customer{
+       customerId: ID!
+       customerPhone: CustomerPhone!
+       customerEmail: CustomerEmail!
+       customerAddress : CustomerAddress!
+       customerName : CustomerName!
+}
+
+type CustomerPhone{
+    customerPhoneIdentifier: ID!
+    customerId: ID!
+    areaCode: String!
+    number: String!
+    country: String!
+}
+
+type CustomerEmail{
+    customerEmailIdentifier: ID!
+    customerId: ID!
+    email: String!
+}
+
+type CustomerAddress{
+    customerAddressIdentifier: ID!
+    customerId: ID!
+    address: String!
+    zip: String!
+    state: String!
+    country: String!
+}
+
+type CustomerName{
+    participantNameIdentifier: ID! @shareable
+    firstName: String! @shareable
+    LastName: String! @shareable
+    MiddleName: String! @shareable
+    fullName: String! @shareable
+}
+
+
+
+
